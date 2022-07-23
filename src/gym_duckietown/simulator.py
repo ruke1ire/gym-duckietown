@@ -172,7 +172,7 @@ DEFAULT_FRAME_SKIP = 1
 
 DEFAULT_ACCEPT_START_ANGLE_DEG = 60
 
-REWARD_INVALID_POSE = -1000
+REWARD_INVALID_POSE = -200
 
 MAX_SPAWN_ATTEMPTS = 5000
 
@@ -1696,7 +1696,7 @@ class Simulator(gym.Env):
             msg = "Stopping the simulator because we reached max_steps = %s" % self.max_steps
             # logger.info(msg)
             done = True
-            reward = 0
+            reward = 100
             done_code = "max-steps-reached"
         else:
             done = False
