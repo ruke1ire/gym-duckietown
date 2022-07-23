@@ -1661,9 +1661,10 @@ class Simulator(gym.Env):
         except NotInLane:
             reward = 40 * col_penalty
         else:
+            #print(lp.dot_dir, speed, lp.dist)
 
             # Compute the reward
-            reward = +1.0 * speed * lp.dot_dir + -10 * np.abs(lp.dist) + +40 * col_penalty
+            reward = +50.0 * speed * lp.dot_dir + -10 * np.abs(lp.dist) + +40 * col_penalty
         return reward
 
     def step(self, action: np.ndarray):
@@ -1699,7 +1700,7 @@ class Simulator(gym.Env):
             done_code = "max-steps-reached"
         else:
             done = False
-            reward = self.compute_reward(self.cur_pos, self.cur_angle, self.robot_speed)
+            reward = self.compute_reward(self.cur_pos, self.cur_angle, self.speed)
             msg = ""
             done_code = "in-progress"
         return DoneRewardInfo(done=done, done_why=msg, reward=reward, done_code=done_code)
