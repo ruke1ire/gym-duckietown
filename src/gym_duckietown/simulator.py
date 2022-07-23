@@ -1671,7 +1671,6 @@ class Simulator(gym.Env):
             # Compute the reward
             #print(lp)
             reward = (5.0 * speed * lp.dot_dir -10 * np.abs(lp.dist) + 4 * col_penalty)/4.0
-            print(reward)
         return reward
 
     def step(self, action: np.ndarray):
