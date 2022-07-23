@@ -1565,7 +1565,12 @@ class Simulator(gym.Env):
 
         # Compute the robot's speed
         delta_pos = self.cur_pos - prev_pos
-        self.speed = np.linalg.norm(delta_pos) / delta_time
+        #print(delta_pos)
+        #print(delta_pos)
+        #print(self.cur_angle)
+        self.speed = (delta_pos[0]*np.cos(self.cur_angle) - delta_pos[2]*np.sin(self.cur_angle))/delta_time
+        #self.speed = np.linalg.norm(delta_pos) / delta_time
+        #print(self.speed)
 
         # Update world objects
         for obj in self.objects:
@@ -1659,12 +1664,14 @@ class Simulator(gym.Env):
         try:
             lp = self.get_lane_pos2(pos, angle)
         except NotInLane:
-            reward = 40 * col_penalty
+            reward = 4 * col_penalty
         else:
             #print(lp.dot_dir, speed, lp.dist)
 
             # Compute the reward
-            reward = +50.0 * speed * lp.dot_dir + -10 * np.abs(lp.dist) + +40 * col_penalty
+            #print(lp)
+            reward = (5.0 * speed * lp.dot_dir -10 * np.abs(lp.dist) + 4 * col_penalty)/4.0
+            print(reward)
         return reward
 
     def step(self, action: np.ndarray):

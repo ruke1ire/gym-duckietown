@@ -93,32 +93,33 @@ def update(dt):
     if key_handler[key.UP]:
         action += np.array([0.44, 0.0])
     if key_handler[key.DOWN]:
-        action -= np.array([0.44, 0])
+        action += np.array([-0.44, -0.0])
     if key_handler[key.LEFT]:
-        action += np.array([0, 1])
+        action += np.array([0.0, 1.0])
     if key_handler[key.RIGHT]:
-        action -= np.array([0, 1])
+        action += np.array([0.0, -1.0])
     if key_handler[key.SPACE]:
         action = np.array([0, 0])
 
-    v1 = action[0]
-    v2 = action[1]
-    # Limit radius of curvature
-    if v1 == 0 or abs(v2 / v1) > (min_rad + wheel_distance / 2.0) / (min_rad - wheel_distance / 2.0):
-        # adjust velocities evenly such that condition is fulfilled
-        delta_v = (v2 - v1) / 2 - wheel_distance / (4 * min_rad) * (v1 + v2)
-        v1 += delta_v
-        v2 -= delta_v
-
-    action[0] = v1
-    action[1] = v2
-
-    # Speed boost
-    if key_handler[key.LSHIFT]:
-        action *= 1.5
+#    v1 = action[0]
+#    v2 = action[1]
+#    # Limit radius of curvature
+#    if v1 == 0 or abs(v2 / v1) > (min_rad + wheel_distance / 2.0) / (min_rad - wheel_distance / 2.0):
+#        # adjust velocities evenly such that condition is fulfilled
+#        delta_v = (v2 - v1) / 2 - wheel_distance / (4 * min_rad) * (v1 + v2)
+#        v1 += delta_v
+#        v2 -= delta_v
+#
+#    action[0] = v1
+#    action[1] = v2
+#
+#    # Speed boost
+#    if key_handler[key.LSHIFT]:
+#        action *= 1.5
 
     obs, reward, done, info = env.step(action)
-    print("step_count = %s, reward=%.3f" % (env.unwrapped.step_count, reward))
+    #print("step_count = %s, reward=%.3f" % (env.unwrapped.step_count, reward))
+    #print("reward =", reward)
 
     if key_handler[key.RETURN]:
 
